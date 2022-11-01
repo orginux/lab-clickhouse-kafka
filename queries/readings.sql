@@ -21,7 +21,7 @@ SETTINGS kafka_broker_list = 'kafka:9092',
        kafka_group_name = 'readings_consumer_group1',
        kafka_format = 'CSV',
        kafka_max_block_size = 1048576,
-       kafka_handle_error_mode='stream';
+       kafka_handle_error_mode='stream'; --  write error and message from Kafka itself to virtual columns: _error, _raw_message
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.kafka_to_table TO test_kafka.table_mt AS
 SELECT id, time, second_id
