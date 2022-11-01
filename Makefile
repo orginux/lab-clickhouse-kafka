@@ -12,7 +12,7 @@ topic-check:
 topic-lag:
 	docker exec kafka kafka-run-class kafka.admin.ConsumerGroupCommand --group readings_consumer_group1 --bootstrap-server kafka:9092 --describe
 topic-produce-messages:
-	docker exec kafka bash producer.sh
+	docker exec kafka bash /scripts/producer.sh
 
 # ClickHouse
 clickhouse-create-tables:
@@ -20,6 +20,8 @@ clickhouse-create-tables:
 	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/readings_errors.sql
 clickhouse-messages-count:
 	docker exec clickhouse clickhouse-client --query "select count() from readings"
+clickhouse-log-errors:
+	docker exec -it clickhouse tail -f /var/log/clickhouse-server/clickhouse-server.err.log
 
 # Prepare lab
 create: up topic-create topic-check clickhouse-create-tables

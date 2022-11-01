@@ -1,13 +1,25 @@
 #! /bin/bash
-i=0
+x="${1:-1000}"
+MESSAGES_FILE="/tmp/messages.csv"
 
-while :
+echo "Generate ${x} messages"
+
+# Clean up
+rm -f ${MESSAGES_FILE}
+
+i=1
+
+while [ $i -le ${x} ]
 do
 
-    i=$((i+1))
     j=$((i/2))
 
-    echo "Message #${i}"
-    echo "$i, `date +'%Y.%m.%d %T'`, $j" | kafka-console-producer --broker-list kafka:9092 --topic readings
+    echo "$i, `date +'%Y.%m.%d %T'`, $j" >> ${MESSAGES_FILE}
 
+    i=$(( $i + 1 ))
 done
+
+kafka-console-producer --broker-list kafka:9092 --topic readings < ${MESSAGES_FILE}
+
+# Clean up
+rm -f ${MESSAGES_FILE}

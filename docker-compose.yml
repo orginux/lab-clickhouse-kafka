@@ -47,8 +47,8 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     volumes:
       - type: bind
-        source: ./scripts/producer.sh
-        target: /usr/local/bin/producer.sh
+        source: ./scripts/
+        target: /scripts/
     networks:
       - clickhouse-network
 
