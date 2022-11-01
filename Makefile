@@ -6,20 +6,20 @@ down:
 
 # Kafka
 topic-create:
-	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --topic readings --create --partitions 6 --replication-factor 1
+	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --topic ids --create --partitions 6 --replication-factor 1
 topic-check:
-	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --describe readings
+	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --describe ids
 topic-lag:
-	docker exec kafka kafka-run-class kafka.admin.ConsumerGroupCommand --group readings_consumer_group1 --bootstrap-server kafka:9092 --describe
+	docker exec kafka kafka-run-class kafka.admin.ConsumerGroupCommand --group ids_consumer_group1 --bootstrap-server kafka:9092 --describe
 topic-produce-messages:
 	docker exec kafka bash /scripts/producer.sh
 
 # ClickHouse
 clickhouse-create-tables:
-	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/readings.sql
-	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/readings_errors.sql
+	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_mt.sql
+	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_errors.sql
 clickhouse-messages-count:
-	docker exec clickhouse clickhouse-client --query "select count() from readings"
+	docker exec clickhouse clickhouse-client --query "select count() from test_kafka.table_mt"
 clickhouse-log-errors:
 	docker exec -it clickhouse tail -f /var/log/clickhouse-server/clickhouse-server.err.log
 

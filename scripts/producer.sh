@@ -19,7 +19,7 @@ do
     i=$(( $i + 1 ))
 done
 
-kafka-console-producer --broker-list kafka:9092 --topic readings < ${MESSAGES_FILE}
+kafka-console-producer --broker-list kafka:9092 --topic ids < ${MESSAGES_FILE}
 
 # Clean up
 rm -f ${MESSAGES_FILE}
