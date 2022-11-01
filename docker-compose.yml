@@ -2,24 +2,6 @@
 version: '3.7'
 
 services:
-  clickhouse-server:
-    image: clickhouse/clickhouse-server:22.8
-    container_name: clickhouse
-    ports:
-      - "8123:8123"
-    networks:
-      - clickhouse-network
-    restart: "no"
-    volumes:
-      - type: bind
-        source: ./configs/clickhouse/users.d/
-        target: /etc/clickhouse-server/users.d/
-      - type: bind
-        source: ./queries/
-        target: /tmp/queries/
-    networks:
-      - clickhouse-network
-
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
@@ -29,11 +11,58 @@ services:
     networks:
       - clickhouse-network
 
+  clickhouse-1: &clickhouse-1
+    image: clickhouse/clickhouse-server:22.8
+    ports:
+      - "8123:8123"
+    networks:
+      - clickhouse-network
+    depends_on:
+      - zookeeper
+    restart: "no"
+    environment:
+      CH_SHARD: 1
+    volumes:
+      - type: bind
+        source: ./configs/clickhouse/users.d/
+        target: /etc/clickhouse-server/users.d/
+      - type: bind
+        source: ./configs/clickhouse/config.d/remote_servers.xml
+        target: /etc/clickhouse-server/config.d/remote_servers.xml
+      - type: bind
+        source: ./configs/clickhouse/config.d/zookeeper.xml
+        target: /etc/clickhouse-server/config.d/zookeeper.xml
+      - type: bind
+        source: ./configs/clickhouse/config.d/macros.xml
+        target: /etc/clickhouse-server/config.d/macros.xml
+      - type: bind
+        source: ./configs/clickhouse/config.d/kafka.xml
+        target: /etc/clickhouse-server/config.d/kafka.xml
+      - type: bind
+        source: ./queries/
+        target: /tmp/queries/
+
+  clickhouse-2:
+    <<: *clickhouse-1
+    environment:
+      CH_SHARD: 2
+    ports:
+      - "8124:8123"
+
+  clickhouse-3:
+    <<: *clickhouse-1
+    environment:
+      CH_SHARD: 3
+    ports:
+      - "8125:8123"
+
   kafka:
     image: confluentinc/cp-kafka:7.0.1
     container_name: kafka
     ports:
       - "9092:9092"
+    networks:
+      - clickhouse-network
     depends_on:
       - zookeeper
     environment:
@@ -49,8 +78,6 @@ services:
       - type: bind
         source: ./scripts/
         target: /scripts/
-    networks:
-      - clickhouse-network
 
 networks:
   clickhouse-network:

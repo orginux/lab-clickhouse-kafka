@@ -1,7 +1,7 @@
-CREATE DATABASE IF NOT EXISTS test_kafka;
+CREATE DATABASE IF NOT EXISTS test_kafka ON CLUSTER '{cluster}';
 
 -- Error handling
-CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.errors_mv TO test_kafka.table_errors AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.errors_mv ON CLUSTER '{cluster}' TO test_kafka.table_errors AS
 SELECT _topic       AS topic,
        _partition   AS partition,
        _offset      AS offset,
@@ -10,7 +10,7 @@ SELECT _topic       AS topic,
 FROM test_kafka.table_kafka
 WHERE length(_error) > 0;
 
-CREATE TABLE IF NOT EXISTS test_kafka.table_errors
+CREATE TABLE IF NOT EXISTS test_kafka.table_errors ON CLUSTER '{cluster}'
 (
     event_time  DateTime DEFAULT now(),
     `topic`     String,

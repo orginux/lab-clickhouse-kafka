@@ -1,0 +1,7 @@
+<clickhouse>
+  <macros>
+    <cluster>test_cluster</cluster>
+    <replica from_env="HOSTNAME"></replica>
+    <shard from_env="CH_SHARD"></shard>
+  </macros>
+</clickhouse>

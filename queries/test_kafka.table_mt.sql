@@ -1,16 +1,19 @@
-CREATE DATABASE IF NOT EXISTS test_kafka;
+CREATE DATABASE IF NOT EXISTS test_kafka ON CLUSTER '{cluster}';
 
 -- Main table
-CREATE TABLE IF NOT EXISTS test_kafka.table_mt (
+CREATE TABLE IF NOT EXISTS test_kafka.table_mt ON CLUSTER '{cluster}'(
     id Int32 Codec(DoubleDelta, LZ4),
     time DateTime Codec(DoubleDelta, LZ4),
     date ALIAS toDate(time),
     second_id Decimal(5,2) Codec(T64, LZ4)
-) Engine = MergeTree
+) Engine = ReplicatedMergeTree('/clickhouse/tables/test_kafka/table_mt', '{replica}')
 PARTITION BY toYYYYMM(time)
 ORDER BY (id, time);
 
-CREATE TABLE IF NOT EXISTS test_kafka.table_kafka (
+CREATE TABLE test_kafka.table_distributed ON CLUSTER '{cluster}' AS test_kafka.table_mt
+ENGINE = Distributed('{cluster}', test_kafka, table_mt, rand());
+
+CREATE TABLE IF NOT EXISTS test_kafka.table_kafka ON CLUSTER '{cluster}'(
     id Int32,
     time DateTime,
     second_id Decimal(5,2)
@@ -23,6 +26,6 @@ SETTINGS kafka_broker_list = 'kafka:9092',
        kafka_max_block_size = 1048576,
        kafka_handle_error_mode='stream'; --  write error and message from Kafka itself to virtual columns: _error, _raw_message
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.kafka_to_table TO test_kafka.table_mt AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.kafka_to_table ON CLUSTER '{cluster}' TO test_kafka.table_mt AS
 SELECT id, time, second_id
 FROM test_kafka.table_kafka;

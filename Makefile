@@ -16,12 +16,12 @@ topic-produce-messages:
 
 # ClickHouse
 clickhouse-create-tables:
-	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_mt.sql
-	docker exec clickhouse clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_errors.sql
+	docker exec lab-kafka-to-clickhouse-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_mt.sql
+	docker exec lab-kafka-to-clickhouse-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_errors.sql
 clickhouse-messages-count:
-	docker exec clickhouse clickhouse-client --query "select count() from test_kafka.table_mt"
+	docker exec lab-kafka-to-clickhouse-clickhouse-1-1 clickhouse-client --query "select count() from test_kafka.table_mt"
 clickhouse-log-errors:
-	docker exec -it clickhouse tail -f /var/log/clickhouse-server/clickhouse-server.err.log
+	docker exec -it lab-kafka-to-clickhouse-clickhouse-1-1 tail -f /var/log/clickhouse-server/clickhouse-server.err.log
 
 # Prepare lab
 create: up topic-create topic-check clickhouse-create-tables
