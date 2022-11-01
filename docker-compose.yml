@@ -1,0 +1,58 @@
+---
+version: '3.7'
+
+services:
+  clickhouse-server:
+    image: clickhouse/clickhouse-server:22.8
+    container_name: clickhouse
+    ports:
+      - "8123:8123"
+    networks:
+      - clickhouse-network
+    logging:
+      driver: none
+    restart: "no"
+    volumes:
+      - type: bind
+        source: ./configs/clickhouse/users.d/
+        target: /etc/clickhouse-server/users.d/
+      - type: bind
+        source: ./queries/
+        target: /tmp/queries/
+    networks:
+      - clickhouse-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - clickhouse-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    volumes:
+      - type: bind
+        source: ./scripts/producer.sh
+        target: /usr/local/bin/producer.sh
+    networks:
+      - clickhouse-network
+
+networks:
+  clickhouse-network:
