@@ -1,14 +1,16 @@
+CREATE DATABASE IF NOT EXISTS test_kafka;
+
 -- Error handling
-CREATE MATERIALIZED VIEW IF NOT EXISTS readings_errors_mv TO readings_errors AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS test_kafka.errors_mv TO test_kafka.table_errors AS
 SELECT _topic       AS topic,
        _partition   AS partition,
        _offset      AS offset,
        _raw_message AS raw,
        _error       AS error
-FROM readings_queue
+FROM test_kafka.table_kafka
 WHERE length(_error) > 0;
 
-CREATE TABLE IF NOT EXISTS readings_errors
+CREATE TABLE IF NOT EXISTS test_kafka.table_errors
 (
     event_time  DateTime DEFAULT now(),
     `topic`     String,
