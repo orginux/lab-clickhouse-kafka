@@ -9,8 +9,6 @@ services:
       - "8123:8123"
     networks:
       - clickhouse-network
-    logging:
-      driver: none
     restart: "no"
     volumes:
       - type: bind
