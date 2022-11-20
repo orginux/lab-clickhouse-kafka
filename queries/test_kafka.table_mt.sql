@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS test_kafka.table_mt ON CLUSTER '{cluster}'(
 PARTITION BY toYYYYMM(time)
 ORDER BY (id, time);
 
-CREATE TABLE test_kafka.table_distributed ON CLUSTER '{cluster}' AS test_kafka.table_mt
+CREATE TABLE IF NOT EXISTS test_kafka.table_distributed ON CLUSTER '{cluster}' AS test_kafka.table_mt
 ENGINE = Distributed('{cluster}', test_kafka, table_mt, rand());
 
 CREATE TABLE IF NOT EXISTS test_kafka.table_kafka ON CLUSTER '{cluster}'(
