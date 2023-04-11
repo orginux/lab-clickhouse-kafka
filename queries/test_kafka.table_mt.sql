@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS test_kafka.table_mt ON CLUSTER '{cluster}'(
     time DateTime Codec(DoubleDelta, LZ4),
     date ALIAS toDate(time),
     second_id Decimal(5,2) Codec(T64, LZ4)
-) Engine = ReplicatedMergeTree('/clickhouse/tables/test_kafka/table_mt', '{replica}')
+) Engine = ReplicatedMergeTree('/clickhouse/tables/{shard}/test_kafka/table_mt', '{replica}')
 PARTITION BY toYYYYMM(time)
 ORDER BY (id, time);
 
