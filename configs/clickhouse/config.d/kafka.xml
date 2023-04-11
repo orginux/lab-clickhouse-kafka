@@ -4,10 +4,4 @@
     <debug>cgrp</debug>
   </kafka>
 
-  <!-- Configuration specific for topic "ids" -->
-  <kafka_ids>
-    <retry_backoff_ms>250</retry_backoff_ms>
-    <fetch_min_bytes>100000</fetch_min_bytes>
-    <fetch_wait_max_ms>180000</fetch_wait_max_ms>
-  </kafka_ids>
 </clickhouse>
