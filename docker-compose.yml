@@ -3,7 +3,7 @@ version: '3.7'
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
+    image: zookeeper:3.8.1
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -12,7 +12,7 @@ services:
       - clickhouse-network
 
   clickhouse-1: &clickhouse-1
-    image: clickhouse/clickhouse-server:22.8
+    image: clickhouse/clickhouse-server:23.3.1.2823
     ports:
       - "8123:8123"
     networks:
