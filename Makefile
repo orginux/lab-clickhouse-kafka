@@ -19,7 +19,7 @@ clickhouse-create-tables:
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_mt.sql
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_errors.sql
 clickhouse-messages-count:
-	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --query "select count() from test_kafka.table_mt"
+	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --query "select count() from test_kafka.table_distributed"
 clickhouse-log-errors:
 	docker exec -it lab-clickhouse-kafka-clickhouse-1-1 tail -f /var/log/clickhouse-server/clickhouse-server.err.log
 
