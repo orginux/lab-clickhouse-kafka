@@ -3,19 +3,19 @@
         <test_cluster>
              <shard>
                  <replica>
-                     <host>lab-kafka-to-clickhouse-clickhouse-1-1</host>
+                     <host>lab-clickhouse-kafka-clickhouse-1-1</host>
                      <port>9000</port>
                  </replica>
              </shard>
              <shard>
                  <replica>
-                     <host>lab-kafka-to-clickhouse-clickhouse-2-1</host>
+                     <host>lab-clickhouse-kafka-clickhouse-2-1</host>
                      <port>9000</port>
                  </replica>
              </shard>
              <shard>
                  <replica>
-                     <host>lab-kafka-to-clickhouse-clickhouse-3-1</host>
+                     <host>lab-clickhouse-kafka-clickhouse-3-1</host>
                      <port>9000</port>
                  </replica>
              </shard>
