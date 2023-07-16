@@ -4,7 +4,7 @@ kafka:
 topic:
   name: ids
   batch_msgs: 1000
-  batch_count: 1000
+  batch_count: 5
   batch_delay_ms: 1
 fields:
   - name: id
