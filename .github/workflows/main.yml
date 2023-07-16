@@ -9,18 +9,24 @@ on:
       - '*'
 
 jobs:
-  hadolint:
+  lab:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Create the lab
         run: |
           make create
+
       - name: Produce messages
         run: |
           make topic-produce-messages
+
       - name: Check lag
         run: |
           make topic-lag
+
       - name: Check the number of messgaes in ClickHouse
         run: |
           make clickhouse-messages-count
