@@ -52,7 +52,12 @@ To check the lag of the consumer group, run:
 make topic-lag
 ```
 
-### Stop the project
+Connect to ClickHouse to select data the data
+```bash
+make clickhouse-client
+```
+
+### Stop the lab
 To stop and remove all the containers, run:
 ```bash
 make down

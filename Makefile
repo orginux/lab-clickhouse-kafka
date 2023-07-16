@@ -28,6 +28,8 @@ clickhouse-messages-count:
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --query "select count() from test_kafka.table_distributed"
 clickhouse-log-errors:
 	docker exec -it lab-clickhouse-kafka-clickhouse-1-1 tail -n 50 -f /var/log/clickhouse-server/clickhouse-server.err.log
+clickhouse-client:
+	docker exec -it lab-clickhouse-kafka-clickhouse-1-1 clickhouse client
 
 # Prepare lab
 create: up topic-create topic-check clickhouse-create-tables
