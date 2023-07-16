@@ -43,6 +43,7 @@ To produce messages to the topic, run:
 ```bash
 make topic-produce-messages
 ```
+producing messages with orginux/kafka-traffic-generator, you can set the messages number or data types in `./configs/ktg/config.yaml`.
 
 To check the lag of the consumer group, run:
 ```bash

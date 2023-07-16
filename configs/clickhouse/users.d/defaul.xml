@@ -15,4 +15,15 @@
             <access_management>1</access_management>
         </default>
     </users>
+
+    <profiles>
+    <!-- Default settings -->
+        <default>
+        <!-- The maximum number of threads when running a single query. -->
+        <max_threads>8</max_threads>
+
+        <!-- ClickHouse can parse the basic YYYY-MM-DD HH:MM:SS format and all ISO 8601 date and time formats -->
+        <date_time_input_format>best_effort</date_time_input_format>
+        </default>
+    </profiles>
 </clickhouse>

@@ -19,7 +19,7 @@ services:
       - clickhouse-network
     depends_on:
       - zookeeper
-    restart: "no"
+    restart: always
     environment:
       CH_SHARD: 1
     volumes:
@@ -27,17 +27,8 @@ services:
         source: ./configs/clickhouse/users.d/
         target: /etc/clickhouse-server/users.d/
       - type: bind
-        source: ./configs/clickhouse/config.d/remote_servers.xml
-        target: /etc/clickhouse-server/config.d/remote_servers.xml
-      - type: bind
-        source: ./configs/clickhouse/config.d/zookeeper.xml
-        target: /etc/clickhouse-server/config.d/zookeeper.xml
-      - type: bind
-        source: ./configs/clickhouse/config.d/macros.xml
-        target: /etc/clickhouse-server/config.d/macros.xml
-      - type: bind
-        source: ./configs/clickhouse/config.d/kafka.xml
-        target: /etc/clickhouse-server/config.d/kafka.xml
+        source: ./configs/clickhouse/config.d/
+        target: /etc/clickhouse-server/config.d/
       - type: bind
         source: ./queries/
         target: /tmp/queries/
