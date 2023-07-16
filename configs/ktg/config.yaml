@@ -3,14 +3,18 @@ kafka:
   host: "kafka:9092"
 topic:
   name: ids
-  batch_msgs: 100
-  batch_count: 1
-  batch_delay_ms: 0
+  batch_msgs: 1000
+  batch_count: 1000
+  batch_delay_ms: 1
 fields:
   - name: id
     function: int32
   - name: time
-    function: date
+    function: daterange
+    params:
+      format: "yyyy-MM-dd HH:mm:ss"
+      startdate: "2023-12-01 00:00:00"
+      enddate:  "2023-12-02 00:00:00"
   - name: second_id
     function: float32range
     params:
