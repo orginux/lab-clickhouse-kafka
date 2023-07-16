@@ -7,7 +7,7 @@ down:
 
 # Kafka
 topic-create:
-	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --topic ids --create --partitions 6 --replication-factor 1
+	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --topic ids --create --partitions 4 --replication-factor 1
 topic-check:
 	docker exec kafka kafka-topics --bootstrap-server kafka:9092 --describe ids
 topic-lag:
@@ -24,7 +24,7 @@ topic-consumer-20:
 clickhouse-create-tables:
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_mt.sql
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --multiline --queries-file /tmp/queries/test_kafka.table_errors.sql
-clickhouse-messages-count:
+clickhouse-count-messages:
 	docker exec lab-clickhouse-kafka-clickhouse-1-1 clickhouse-client --query "select count() from test_kafka.table_distributed"
 clickhouse-log-errors:
 	docker exec -it lab-clickhouse-kafka-clickhouse-1-1 tail -n 50 -f /var/log/clickhouse-server/clickhouse-server.err.log

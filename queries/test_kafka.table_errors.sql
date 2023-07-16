@@ -20,5 +20,5 @@ CREATE TABLE IF NOT EXISTS test_kafka.table_errors ON CLUSTER '{cluster}'
     `error`     String
 )
     ENGINE = MergeTree
-        ORDER BY (event_time)
-        TTL event_time + INTERVAL 7 day;
+    ORDER BY (event_time)
+    TTL event_time + INTERVAL 7 day;
