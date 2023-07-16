@@ -1,3 +1,5 @@
+[![Lab](https://github.com/orginux/lab-clickhouse-kafka/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/orginux/lab-clickhouse-kafka/actions/workflows/main.yml)
+
 # Lab ClickHouse and Kafka
 This project demonstrates the integration between ClickHouse and Kafka. It allows you to create a Kafka topic, produce messages to it, and consume them with ClickHouse.
 
