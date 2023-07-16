@@ -34,3 +34,7 @@ jobs:
       - name: Check the number of messgaes in ClickHouse
         run: |
           make clickhouse-messages-count
+
+      - name: Stop containers
+        run: |
+          make down
