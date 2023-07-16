@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS test_kafka.table_kafka ON CLUSTER '{cluster}'(
 ENGINE = Kafka
 SETTINGS kafka_broker_list = 'kafka:9092',
        kafka_topic_list = 'ids',
-       kafka_group_name = 'ids_consumer_group1',
-       kafka_format = 'CSV',
+       kafka_group_name = 'ids_ch',
+       kafka_format = 'JSONEachRow',
        kafka_max_block_size = 1048576,
        kafka_handle_error_mode='stream'; --  write error and message from Kafka itself to virtual columns: _error, _raw_message
 

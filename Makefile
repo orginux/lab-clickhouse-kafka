@@ -13,6 +13,8 @@ topic-lag:
 	docker exec kafka kafka-run-class kafka.admin.ConsumerGroupCommand --group ids_consumer_group1 --bootstrap-server kafka:9092 --describe
 topic-produce-messages:
 	docker exec kafka bash /scripts/producer.sh
+topic-consumer:
+	docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic ids
 
 # ClickHouse
 clickhouse-create-tables:

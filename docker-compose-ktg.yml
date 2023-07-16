@@ -1,0 +1,20 @@
+---
+version: '3.7'
+
+services:
+  ktg:
+    image: ghcr.io/orginux/kafka-traffic-generatror:latest
+    container_name: ktg
+    networks:
+      - kafka-network
+    volumes:
+      - type: bind
+        source: ./configs/ktg/
+        target: /etc/ktg/
+        read_only:  true
+    command: --config /etc/ktg/config.yaml
+
+networks:
+  kafka-network:
+    name: lab-clickhouse-kafka_clickhouse-network
+    external: true

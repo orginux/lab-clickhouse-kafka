@@ -1,0 +1,18 @@
+---
+kafka:
+  host: "kafka:9092"
+topic:
+  name: ids
+  batch_msgs: 3
+  batch_count: 10
+  batch_delay_ms: 1000
+fields:
+  - name: id
+    function: int32
+  - name: time
+    function: date
+  - name: second_id
+    function: float32range
+    params:
+      min: 1.0
+      max: 2.0
