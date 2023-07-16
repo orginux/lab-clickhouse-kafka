@@ -25,7 +25,7 @@ jobs:
 
       - name: Check messages in the topic
         run: |
-          make topic-consumer
+          make topic-consumer-20
 
       - name: Check lag
         run: |

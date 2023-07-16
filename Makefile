@@ -17,6 +17,8 @@ topic-produce-messages:
 	docker compose --file docker-compose-ktg.yml up
 topic-consumer:
 	docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --topic ids
+topic-consumer-20:
+	docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --max-messages 20 --topic ids
 
 # ClickHouse
 clickhouse-create-tables:
