@@ -12,7 +12,7 @@ services:
       - clickhouse-network
 
   clickhouse-1: &clickhouse-1
-    image: clickhouse/clickhouse-server:23.3.1.2823
+    image: clickhouse/clickhouse-server:23.12-alpine
     ports:
       - "8123:8123"
     networks:
